@@ -5,8 +5,8 @@ import { useSearch } from 'lib/search-context'
 
 export default ({
   children,
-  title = 'ZBD Rust Crate - zebedee-rust',
-  description = 'Use ZBD API in your Rust project. The crate provides everything necessary to start adding instant Bitcoin payments to your application, game, or platform.',
+  title = 'ZBD Python Package - zebedee-py',
+  description = 'Use ZBD API in your Python project. The package provides everything necessary to start adding instant Bitcoin payments to your application, game, or platform.',
   image = 'https://i.imgur.com/0Y9behL.png',
 }) => {
   const { search } = useSearch()
@@ -36,7 +36,7 @@ export default ({
         <meta property="og:image" content={image} />
 
         {/* URL */}
-        <meta property="og:url" content="https://rust.zbd.dev" />
+        <meta property="og:url" content="https://python.zbd.dev" />
         <meta name="twitter:site" content="@zebedeeio" />
 
         {/* General */}
