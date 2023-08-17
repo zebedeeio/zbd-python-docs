@@ -58,40 +58,25 @@ const getEntity = (word) => {
 }
 
 const codeSnippet = `
-  use std::env;
-  use zebedee_rust::{ln_address::*, ZebedeeClient};
+    import zebedee
 
-  #[tokio::main]
-  async fn main() {
-    let apikey: String = env::var("ZBD_API_KEY").unwrap();
-    let zebedee_client = ZebedeeClient::new().apikey(apikey).build();
+    client = zebedee.Project(ZBD_API_KEY)
 
-    // Create a Lightning payment
-    let payment = LnPayment {
-      ln_address: String::from("dannym@zbd.gg"),
-      amount: String::from("10000"),
-      ..Default::default()
-    };
+    ln_payment_response = client.send_payment_to_lightning_address(  
+        lightning_address="santos@zbd.gg", amount_msats=10000, 
+        comment="payment comment", internal_id="test:1")
 
-    // Initiate the payment
-    let payment_res = zebedee_client.pay_ln_address(&payment).await.unwrap();
-    
-    // Print the result
-    println!("Internal transfer result: {:?}", payment_res);
-  }
+    print(ln_payment_response)
 
 `
 
-const rustAuthSnippet = `
-  use zebedee_rust::{ZebedeeClient};
+const pythonAuthSnippet = `
+    import zebedee
 
-  let zbd_client = ZebedeeClient::new()
-    .apikey(YOUR_API_KEY_HERE)
-    .build();
+    client = zebedee.Project("YOUR_API_KEY_HERE")
 
-  let payment = GamertagPayment{...};
+    print(client.get_wallet_details())
 
-  let payment_res = zbd_client.pay_gamertag(&payment).await.unwrap();
 
 `
 
@@ -103,18 +88,18 @@ export default function HomePage() {
        */}
       <div className={heroStyles.root}>
         <img
-          src={'/zbd-rust-logo.png'}
+          src={'/zbd-python-logo.png'}
           alt="ZBD Logo"
           className={heroStyles.logoWrapper}
         />
         <div className={heroStyles.mainTitle}>
-          <h1>Rust Crate for ZBD API</h1>
+          <h1>Python package for ZBD API</h1>
         </div>
         <div className={heroStyles.terminal}>
           <div className={heroStyles.codeSnippet}>
             <CopyBlock
               text={codeSnippet}
-              language={'rust'}
+              language={'python'}
               showLineNumbers={false}
               wrapLines
               theme={dracula}
@@ -123,7 +108,7 @@ export default function HomePage() {
         </div>
         <div className={heroStyles.download}>
           <DownloadButton
-            buttonOne={{ label: 'View Crate Docs', url: '/#api' }}
+            buttonOne={{ label: 'View Package Docs', url: '/#api' }}
           />
           <a className={heroStyles.other} href="#sdks">
             View other SDK options
@@ -142,21 +127,20 @@ export default function HomePage() {
           <a href="#setup">Getting Started</a>
         </h2>
         <p>
-          The Rust Crate for ZBD API is available under{' '}
-          <a href="https://crates.io/crates/zebedee-rust">
-            <code>zebedee-rust</code>
+          The Python package for ZBD API is available under{' '}
+          <a href="https://pypi.org/project/zebedee">
+            <code>zebedee-py</code>
           </a>
           . When building tools with ZBD support we encourage you to include{' '}
-          <code>zbd</code> in the <code>keywords</code> field in{' '}
-          <code>Cargo.toml</code>.
+          <code>zbd</code> in your setup.py or pyproject.toml files.
         </p>
         <p>
-          All you have to do to get started is add <code>zebedee-rust</code> as
-          a dependency to your Rust-based project. You can do so using{' '}
-          <code>cargo</code>:
+          All you have to do to get started is add <code>zebedee-py</code> as a
+          dependency to your Python-based project. You can do so using{' '}
+          <code>pip</code>:
         </p>
         <pre>
-          <code>cargo add zebedee_rust</code>
+          <code>pip install zebedee</code>
         </pre>
         <p>
           Now let's authenticate a specific Wallet with that ZBD Project's API
@@ -172,7 +156,7 @@ export default function HomePage() {
         <p>
           In order to authenticate your Project Wallet with the ZBD API, you
           will need to provide your ZBD Project's API Key to the{' '}
-          <code>zebedee-rust</code> crate.{' '}
+          <code>zebedee-py</code> package.{' '}
           <a
             href="https://docs.zebedee.io/docs/docs/dashboard-project-api"
             target="_blank"
@@ -182,15 +166,15 @@ export default function HomePage() {
           .
         </p>
         <p>
-          First you must import the <code>zebedee-rust</code> crate client into
+          First you must import the <code>zebedee-py</code> package client into
           your codebase, and then instantiate it with your Project API Key
           (replace `YOUR_API_KEY_HERE` below with your actual ZBD Project's API
           Key).
         </p>
         <div className={heroStyles.codeSnippet}>
           <CopyBlock
-            text={rustAuthSnippet}
-            language={'rust'}
+            text={pythonAuthSnippet}
+            language={'python'}
             showLineNumbers={false}
             wrapLines
             theme={dracula}
@@ -200,19 +184,19 @@ export default function HomePage() {
         <p>
           You're all set. Now let's move some money at the speed of the
           internet! Check the <a href="/#api">SDK API Reference</a> below for
-          more information on how to use the <code>zebedee-rust</code> crate.
+          more information on how to use the <code>zebedee-py</code> package.
         </p>
 
         {/**
          * Project goals
          */}
         <h2 id="goals">
-          <a href="#goals">zebedee-rust</a>
+          <a href="#goals">zebedee-py</a>
         </h2>
         <p>
           The goal of the project is to create a beautiful and extensible
-          experience for developers using ZBD APIs in a Rust environment. The
-          ZBD community has taken on the challenge and built the Rust SDK
+          experience for developers using ZBD APIs in a Python environment. The
+          ZBD community has taken on the challenge and built the Python package
           themselves. The focus is to provide parity with{' '}
           <a href="https://docs.zebedee.io/api/intro" target="_blank">
             ZBD REST API
@@ -228,9 +212,9 @@ export default function HomePage() {
         </h2>
         <p>
           Below is a comprehensive list of the methods and functions available
-          in the <code>zebedee-rust</code> crate. These methods are ONLY
-          available to the <code>ZebedeeClient</code> client instance after it's
-          been properly authenticated with a Project's API Key.
+          in the <code>zebedee-py</code> package. These methods are ONLY
+          available to the <code>zebedee.Project</code> client instance after
+          it's been properly authenticated with a Project's API Key.
         </p>
         <div className="table large">
           <table className="api">
@@ -328,10 +312,10 @@ export default function HomePage() {
           Feature Request? Bugfix? Recommendations? We're all ears! Head on over
           to the{' '}
           <a
-            href="https://github.com/miketwenty1/zebedee-rust/issues"
+            href="https://github.com/zantoshi/zebedee-py/issues"
             target="_blank"
           >
-            zebedee-rust Issues
+            zebedee-py Issues
           </a>{' '}
           page and submit one. We also welcome Pull Requests and other
           contributions to the library.
@@ -340,8 +324,8 @@ export default function HomePage() {
         <div className={heroStyles.download}>
           <DownloadButton
             buttonOne={{
-              label: 'Crate Source Code',
-              url: 'https://github.com/miketwenty1/zebedee-rust',
+              label: 'Package Source Code',
+              url: 'https://github.com/zantoshi/zebedee-py',
             }}
           />
           <a
