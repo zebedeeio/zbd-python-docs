@@ -35,4 +35,4 @@ The official documentation website for the ZBD Python package [zebedee-py](https
 
 ## Related Repositories
 
-- [zebedee-rust](https://github.com/zantoshi/zebedee-py)
+- [zebedee-py](https://github.com/zantoshi/zebedee-py)
