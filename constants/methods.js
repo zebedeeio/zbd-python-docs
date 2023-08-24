@@ -4,12 +4,6 @@ export const methods = [
     entity: 'Charge',
     description:
       'Creates a new Charge / Payment Request in the Bitcoin Lightning Network, payable by any Bitcoin Lightning wallet.',
-    struct: [
-      {
-        name: 'charge: &Charge',
-        description: 'The Charge reference containing the required parameters.',
-      },
-    ],
     params: [
       {
         name: 'amount_msats',
@@ -61,13 +55,6 @@ export const methods = [
     entity: 'Static Charge',
     description:
       'Creates a new Static Charge / LNURL Pay in the Bitcoin Lightning Network, payable by any Bitcoin Lightning wallet.',
-    struct: [
-      {
-        name: 'static_charge: &StaticCharge',
-        description:
-          'The Static Charge reference containing the required parameters.',
-      },
-    ],
     params: [
       {
         name: 'min_amount_msats',
@@ -131,13 +118,6 @@ export const methods = [
     entity: 'Static Charge',
     description:
       'Perform updates to any of the allowed properties of a Static Charge.',
-    struct: [
-      {
-        name: 'static_charge: &StaticCharge',
-        description:
-          'The Static Charge reference containing the required parameters.',
-      },
-    ],
     params: [
       {
         name: 'min_amount_msats',
@@ -185,13 +165,6 @@ export const methods = [
     entity: 'Withdrawal Request',
     description:
       'A Withdrawal Request is a QR code that allows someone to scan and receive Bitcoin (e.g. Withdrawals).',
-    struct: [
-      {
-        name: 'withdrawal_request: &WithdrawalRequest',
-        description:
-          'The WithdrawalRequest reference containing the required parameters.',
-      },
-    ],
     params: [
       {
         name: 'amount_msats',
@@ -249,14 +222,6 @@ export const methods = [
     entity: 'Lightning Address',
     description:
       'Send Bitcoin payments directly to a Lightning Address. A Lightning Address is an internet identifier (akin to an email address -- andre@zbd.gg) that anyone can send Bitcoin Lightning Network payments to.',
-    struct: [
-      {
-        name: 'payment: &LnPayment',
-        extra: 'required',
-        description:
-          'The LnPayment reference containing the required parameters.',
-      },
-    ],
     params: [
       {
         name: 'lightning_address',
@@ -305,14 +270,6 @@ export const methods = [
     entity: 'Lightning Address',
     description:
       "Generates a Bitcoin Lightning Charge / Payment Request for a given Lightning Address destination. Depending on your system's configuration or your product's UX, you may need the ability to generate Charges for specific users using a different provider than ZBD.",
-    struct: [
-      {
-        name: 'payment: &LnFetchCharge',
-        extra: 'required',
-        description:
-          'The LnFetchCharge reference containing the lightning address.',
-      },
-    ],
     params: [
       {
         name: 'lightning_address',
@@ -353,14 +310,6 @@ export const methods = [
     entity: 'Wallet',
     description:
       'Initiates a transfer of funds between two Project Wallets you own.',
-    struct: [
-      {
-        name: 'interal_transfer_payload: &InternalTransfer',
-        extra: 'required',
-        description:
-          'The InternalTransfer reference containing the payload info for the transfer.',
-      },
-    ],
     params: [
       {
         name: 'amount_msats',
@@ -385,13 +334,6 @@ export const methods = [
     entity: 'Keysend',
     description:
       'This endpoint exposes the ability to make payment directly to a Lightning Network node Public Key, without the need for a Payment Request / Charge.',
-    struct: [
-      {
-        name: 'keysend_payload: &Keysend',
-        extra: 'required',
-        description: 'The Keysend reference containing the payload.',
-      },
-    ],
     params: [
       {
         name: 'amount_msats',
@@ -420,14 +362,6 @@ export const methods = [
     entity: 'Payment',
     description:
       'Pays a Charge / Payment Request in the Bitcoin Lightning Network.',
-    struct: [
-      {
-        name: 'payment: &Payment',
-        extra: 'required',
-        description:
-          'The Payment reference containing the payment information.',
-      },
-    ],
     params: [
       {
         name: 'invoice',
@@ -473,14 +407,6 @@ export const methods = [
     entity: 'ZBD Gamertag',
     description:
       "This API endpoint is used to send Bitcoin payments directly to a user's ZBD Gamertag.",
-    struct: [
-      {
-        name: 'payment: &GamertagPayment',
-        extra: 'required',
-        description:
-          'The GamertagPayment reference containing the payment information.',
-      },
-    ],
     params: [
       {
         name: 'amount_msats',
