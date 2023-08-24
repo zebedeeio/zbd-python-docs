@@ -60,7 +60,7 @@ const getEntity = (word) => {
 const codeSnippet = `
     import zebedee
 
-    client = zebedee.Project(ZBD_API_KEY)
+    client = zebedee.Project(ZBD_API_KEY, CALLBACK_URL)
 
     ln_payment_response = client.send_payment_to_lightning_address(  
         lightning_address="santos@zbd.gg", amount_msats=10000, 
@@ -73,7 +73,7 @@ const codeSnippet = `
 const pythonAuthSnippet = `
     import zebedee
 
-    client = zebedee.Project("YOUR_API_KEY_HERE")
+    client = zebedee.Project("YOUR_API_KEY_HERE", "CALLBACK_URL")
 
     print(client.get_wallet_details())
 
