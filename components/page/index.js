@@ -7,7 +7,7 @@ export default ({
   children,
   title = 'ZBD Python Package - zebedee-py',
   description = 'Use ZBD API in your Python project. The package provides everything necessary to start adding instant Bitcoin payments to your application, game, or platform.',
-  image = 'https://i.imgur.com/0Y9behL.png',
+  image = 'https://i.imgur.com/aHUXe3z.jpg',
 }) => {
   const { search } = useSearch()
 

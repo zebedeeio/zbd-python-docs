@@ -31,7 +31,7 @@ Documentation website for the Python package for the ZBD API
 
 The official documentation website for the ZBD Python package [zebedee-py](https://github.com/zantoshi/zebedee-py).
 
-![](https://i.imgur.com/5KCQKRI.png)
+![](https://i.imgur.com/FlbZnDS.png)
 
 ## Related Repositories
 
