@@ -4,15 +4,9 @@ export const methods = [
     entity: 'Charge',
     description:
       'Creates a new Charge / Payment Request in the Bitcoin Lightning Network, payable by any Bitcoin Lightning wallet.',
-    struct: [
-      {
-        name: 'charge: &Charge',
-        description: 'The Charge reference containing the required parameters.',
-      },
-    ],
     params: [
       {
-        name: 'amount',
+        name: 'amount_msats',
         extra: 'required',
         description: 'The amount for the Charge -> in millisatoshis.',
       },
@@ -22,22 +16,18 @@ export const methods = [
         description: 'Note or comment for this Charge (visible to payer).',
       },
       {
-        name: 'expires_in',
+        name: 'amount_of_seconds_to_expire_after',
         description: 'Time until charge expiration -> in seconds.',
       },
       {
         name: 'internal_id',
         description: 'Open metadata string property.',
       },
-      {
-        name: 'callback_url',
-        description: 'The endpoint ZBD will POST Charge updates to.',
-      },
     ],
     examples: [
       {
         name: 'View response payload examples',
-        url: 'https://docs.zebedee.io/api/charges/create',
+        url: 'https://zbd.dev/api-reference/charges/create',
       },
     ],
   },
@@ -56,7 +46,117 @@ export const methods = [
     examples: [
       {
         name: 'View response payload examples',
-        url: 'https://docs.zebedee.io/api/charges/get',
+        url: 'https://zbd.dev/api-reference/charges/get',
+      },
+    ],
+  },
+  {
+    name: 'create_static_charge',
+    entity: 'Static Charge',
+    description:
+      'Creates a new Static Charge / LNURL Pay in the Bitcoin Lightning Network, payable by any Bitcoin Lightning wallet.',
+    params: [
+      {
+        name: 'min_amount_msats',
+        extra: 'required',
+        description: 'The amount for the Charge -> in millisatoshis.',
+      },
+      {
+        name: 'max_amount_msats',
+        extra: 'required',
+        description: 'Note or comment for this Charge (visible to payer).',
+      },
+      {
+        name: 'description',
+        extra: 'required',
+        description:
+          'Note or comment for this Static Charge (visible to payer).',
+      },
+      {
+        name: 'internal_id',
+        description: 'Open metadata string property.',
+      },
+      {
+        name: 'success_message',
+        description:
+          'The message shown to the user after they make a successful payment.',
+      },
+      {
+        name: 'allowed_slots',
+        description:
+          'Set the maximum number of payments. Use None for unlimited payments.',
+      },
+    ],
+    examples: [
+      {
+        name: 'View response payload examples',
+        url: 'https://zbd.dev/api-reference/static-charges/create',
+      },
+    ],
+  },
+  {
+    name: 'get_static_charge',
+    entity: 'Static Charge',
+    description:
+      'Retrieves all information relating to a specific Static Charge / LNURL Pay.',
+    params: [
+      {
+        name: 'static_charge_id: String',
+        extra: 'required',
+        description: 'A String representing the ID of the Static Charge.',
+      },
+    ],
+    examples: [
+      {
+        name: 'View response payload examples',
+        url: 'https://zbd.dev/api-reference/static-charges/get',
+      },
+    ],
+  },
+  {
+    name: 'update_static_charge',
+    entity: 'Static Charge',
+    description:
+      'Perform updates to any of the allowed properties of a Static Charge.',
+    params: [
+      {
+        name: 'min_amount_msats',
+        extra: 'optional',
+        description: 'The amount for the Charge -> in millisatoshis.',
+      },
+      {
+        name: 'max_amount_msats',
+        extra: 'optional',
+        description: 'Note or comment for this Charge (visible to payer).',
+      },
+      {
+        name: 'description',
+        extra: 'optional',
+        description:
+          'Note or comment for this Static Charge (visible to payer).',
+      },
+      {
+        name: 'internal_id',
+        extra: 'optional',
+        description: 'Open metadata string property.',
+      },
+      {
+        name: 'success_message',
+        extra: 'optional',
+        description:
+          'The message shown to the user after they make a successful payment.',
+      },
+      {
+        name: 'allowed_slots',
+        extra: 'optional',
+        description:
+          'Set the maximum number of payments. Use None for unlimited payments.',
+      },
+    ],
+    examples: [
+      {
+        name: 'View response payload examples',
+        url: 'https://zbd.dev/api-reference/static-charges/create',
       },
     ],
   },
@@ -65,22 +165,15 @@ export const methods = [
     entity: 'Withdrawal Request',
     description:
       'A Withdrawal Request is a QR code that allows someone to scan and receive Bitcoin (e.g. Withdrawals).',
-    struct: [
-      {
-        name: 'withdrawal_request: &WithdrawalRequest',
-        description:
-          'The WithdrawalRequest reference containing the required parameters.',
-      },
-    ],
     params: [
       {
-        name: 'amount',
+        name: 'amount_msats',
         extra: 'required',
         description:
           'The amount for the Withdrawal Request -> in millisatoshis.',
       },
       {
-        name: 'expires_in',
+        name: 'amount_of_seconds_to_expire_after',
         description: 'Time until Withdrawal Request expires -> in seconds.',
       },
       {
@@ -102,7 +195,7 @@ export const methods = [
     examples: [
       {
         name: 'View response payload examples',
-        url: 'https://docs.zebedee.io/api/withdrawal-requests/create',
+        url: 'https://zbd.dev/api-reference/withdrawal-requests/create',
       },
     ],
   },
@@ -120,31 +213,23 @@ export const methods = [
     examples: [
       {
         name: 'View response payload examples',
-        url: 'https://docs.zebedee.io/api/withdrawal-requests/get',
+        url: 'https://zbd.dev/api-reference/withdrawal-requests/get',
       },
     ],
   },
   {
-    name: 'pay_ln_address',
+    name: 'send_payment_to_lightning_address',
     entity: 'Lightning Address',
     description:
       'Send Bitcoin payments directly to a Lightning Address. A Lightning Address is an internet identifier (akin to an email address -- andre@zbd.gg) that anyone can send Bitcoin Lightning Network payments to.',
-    struct: [
-      {
-        name: 'payment: &LnPayment',
-        extra: 'required',
-        description:
-          'The LnPayment reference containing the required parameters.',
-      },
-    ],
     params: [
       {
-        name: 'ln_address',
+        name: 'lightning_address',
         extra: 'required',
         description: 'The Lightning Address of the intended recipient.',
       },
       {
-        name: 'amount',
+        name: 'amount_msats',
         extra: 'required',
         description: 'The amount for the Payment -> in millisatoshis.',
       },
@@ -156,12 +241,12 @@ export const methods = [
     examples: [
       {
         name: 'View response payload examples',
-        url: 'https://docs.zebedee.io/api/lightning-address/send-payment',
+        url: 'https://zbd.dev/api-reference/lightning-address/send-payment',
       },
     ],
   },
   {
-    name: 'validate_ln_address',
+    name: 'validate_lightning_address',
     entity: 'Lightning Address',
     description:
       "Not all internet identifiers are Lightning Addresses / compatible with the Lightning Address protocol. Use this endpoint in order to validate whether a user's entered Lightning Address is valid.",
@@ -176,31 +261,23 @@ export const methods = [
     examples: [
       {
         name: 'View response payload examples',
-        url: 'https://docs.zebedee.io/api/lightning-address/validate',
+        url: 'https://zbd.dev/api-reference/lightning-address/validate',
       },
     ],
   },
   {
-    name: 'fetch_charge_ln_address',
+    name: 'fetch_charge_from_lightning_address',
     entity: 'Lightning Address',
     description:
       "Generates a Bitcoin Lightning Charge / Payment Request for a given Lightning Address destination. Depending on your system's configuration or your product's UX, you may need the ability to generate Charges for specific users using a different provider than ZBD.",
-    struct: [
-      {
-        name: 'payment: &LnFetchCharge',
-        extra: 'required',
-        description:
-          'The LnFetchCharge reference containing the lightning address.',
-      },
-    ],
     params: [
       {
-        name: 'ln_address',
+        name: 'lightning_address',
         extra: 'required',
         description: 'The Lightning Address of the intended recipient.',
       },
       {
-        name: 'amount',
+        name: 'amount_msats',
         extra: 'required',
         description: 'The amount for the Charge -> in millisatoshis.',
       },
@@ -212,7 +289,7 @@ export const methods = [
     examples: [
       {
         name: 'View response payload examples',
-        url: 'https://docs.zebedee.io/api/lightning-address/create-charge',
+        url: 'https://zbd.dev/api-reference/lightning-address/create-charge',
       },
     ],
   },
@@ -224,26 +301,18 @@ export const methods = [
     examples: [
       {
         name: 'View response payload examples',
-        url: 'https://docs.zebedee.io/api/wallet/get',
+        url: 'https://zbd.dev/api-reference/wallet/get',
       },
     ],
   },
   {
-    name: 'internal_transfer',
+    name: 'transfer_zbd_funds',
     entity: 'Wallet',
     description:
       'Initiates a transfer of funds between two Project Wallets you own.',
-    struct: [
-      {
-        name: 'interal_transfer_payload: &InternalTransfer',
-        extra: 'required',
-        description:
-          'The InternalTransfer reference containing the payload info for the transfer.',
-      },
-    ],
     params: [
       {
-        name: 'amount',
+        name: 'amount_msats',
         extra: 'required',
         description: 'The amount to be transferred -> in millisatoshis.',
       },
@@ -256,46 +325,35 @@ export const methods = [
     examples: [
       {
         name: 'View response payload examples',
-        url: 'https://docs.zebedee.io/api/internal-transfer/create',
+        url: 'https://zbd.dev/api-reference/internal-transfer/create',
       },
     ],
   },
   {
-    name: 'keysend',
+    name: 'send_keysend_payment',
     entity: 'Keysend',
     description:
       'This endpoint exposes the ability to make payment directly to a Lightning Network node Public Key, without the need for a Payment Request / Charge.',
-    struct: [
-      {
-        name: 'keysend_payload: &Keysend',
-        extra: 'required',
-        description: 'The Keysend reference containing the payload.',
-      },
-    ],
     params: [
       {
-        name: 'amount',
+        name: 'amount_msats',
         extra: 'required',
         description: 'The amount for the Payment -> in millisatoshis.',
       },
       {
-        name: 'pubkey',
+        name: 'public_key',
         extra: 'required',
         description: 'The Public Key for the destination Lightning Node.',
       },
       {
-        name: 'callback_url',
-        description: 'The endpoint ZBD will POST updates to.',
-      },
-      {
-        name: 'tlv_records',
-        description: 'TLV data records.',
+        name: 'metadata',
+        description: 'TLV key value pairs / data records.',
       },
     ],
     examples: [
       {
         name: 'View response payload examples',
-        url: 'https://docs.zebedee.io/api/keysend/send-payment',
+        url: 'https://zbd.dev/api-reference/keysend/send-payment',
       },
     ],
   },
@@ -304,14 +362,6 @@ export const methods = [
     entity: 'Payment',
     description:
       'Pays a Charge / Payment Request in the Bitcoin Lightning Network.',
-    struct: [
-      {
-        name: 'payment: &Payment',
-        extra: 'required',
-        description:
-          'The Payment reference containing the payment information.',
-      },
-    ],
     params: [
       {
         name: 'invoice',
@@ -330,17 +380,17 @@ export const methods = [
     examples: [
       {
         name: 'View response payload examples',
-        url: 'https://docs.zebedee.io/api/payments/send',
+        url: 'https://zbd.dev/api-reference/payments/send',
       },
     ],
   },
   {
-    name: 'get_payment',
+    name: 'get_payment_details',
     entity: 'Payment',
     description: 'Retrieves all the information related to a specific Payment.',
     params: [
       {
-        name: 'payment_id: String',
+        name: 'zbd_id: String',
         extra: 'required',
         description: 'A String representing the ID of the Payment.',
       },
@@ -348,26 +398,18 @@ export const methods = [
     examples: [
       {
         name: 'View response payload examples',
-        url: 'https://docs.zebedee.io/api/payments/get',
+        url: 'https://zbd.dev/api-reference/payments/get',
       },
     ],
   },
   {
-    name: 'pay_gamertag',
+    name: 'send_payment_to_gamertag',
     entity: 'ZBD Gamertag',
     description:
       "This API endpoint is used to send Bitcoin payments directly to a user's ZBD Gamertag.",
-    struct: [
-      {
-        name: 'payment: &GamertagPayment',
-        extra: 'required',
-        description:
-          'The GamertagPayment reference containing the payment information.',
-      },
-    ],
     params: [
       {
-        name: 'amount',
+        name: 'amount_msats',
         extra: 'required',
         description: 'The amount for the Payment -> in millisatoshis.',
       },
@@ -384,12 +426,12 @@ export const methods = [
     examples: [
       {
         name: 'View response payload examples',
-        url: 'https://docs.zebedee.io/api/gamertag/send-payment',
+        url: 'https://zbd.dev/api-reference/gamertag/send-payment',
       },
     ],
   },
   {
-    name: 'get_gamertag_tx',
+    name: 'get_gamertag_transaction_details',
     entity: 'ZBD Gamertag',
     description: "Get a given ZBD Gamertag when provided with a ZBD User's ID.",
     params: [
@@ -403,12 +445,12 @@ export const methods = [
     examples: [
       {
         name: 'View response payload examples',
-        url: 'https://docs.zebedee.io/api/gamertag/get-payment',
+        url: 'https://zbd.dev/api-reference/gamertag/get-payment',
       },
     ],
   },
   {
-    name: 'get_userid_by_gamertag',
+    name: 'get_user_id_from_gamertag',
     entity: 'ZBD Gamertag',
     description: "Get a given ZBD User's ID when provided with a ZBD Gamertag.",
     params: [
@@ -421,12 +463,12 @@ export const methods = [
     examples: [
       {
         name: 'View response payload examples',
-        url: 'https://docs.zebedee.io/api/gamertag/get-userid',
+        url: 'https://zbd.dev/api-reference/gamertag/get-userid',
       },
     ],
   },
   {
-    name: 'get_gamertag_by_userid',
+    name: 'get_gamertag_from_user_id',
     entity: 'ZBD Gamertag',
     description:
       "Invoked when the app first loads. If a plugin reloads, it's invoked again with the existing app.",
@@ -440,12 +482,12 @@ export const methods = [
     examples: [
       {
         name: 'View response payload examples',
-        url: 'https://docs.zebedee.io/api/gamertag/get-gamertag',
+        url: 'https://zbd.dev/api-reference/gamertag/get-gamertag',
       },
     ],
   },
   {
-    name: 'get_is_supported_region_by_ip',
+    name: 'is_supported_region',
     entity: 'Utility',
     description:
       'If you wish to know whether the incoming user request is coming from a region/country where ZBD is supported or not, you can use this simple API endpoint and pass the target IP address as a parameter.',
@@ -459,12 +501,12 @@ export const methods = [
     examples: [
       {
         name: 'View response payload examples',
-        url: 'https://docs.zebedee.io/api/utils/is-supported',
+        url: 'https://zbd.dev/api-reference/utils/is-supported',
       },
     ],
   },
   {
-    name: 'get_prod_ips',
+    name: 'get_zbd_prod_server_ip',
     entity: 'Utility',
     description:
       "The ZBD API relies on callback URLs for keeping you informed about updates that occur to any Charges, Payments, or Withdrawals you've created. In order to ensure that any incoming callback message is indeed from a trusted ZBD API infrastructure server, we provide this API endpoint for you to know which IP addresses real requests come from.",
@@ -472,12 +514,12 @@ export const methods = [
     examples: [
       {
         name: 'View response payload examples',
-        url: 'https://docs.zebedee.io/api/utils/prod-ips',
+        url: 'https://zbd.dev/api-reference/utils/prod-ips',
       },
     ],
   },
   {
-    name: 'get_btc_usd',
+    name: 'btc_usd_price',
     entity: 'Utility',
     description:
       "Get the latest price for Bitcoin in US Dollars. The exchange rate feed is refreshed every 5 seconds and is based upon a combination of industry-leading partner exchange providers's price feeds.",
@@ -485,8 +527,34 @@ export const methods = [
     examples: [
       {
         name: 'View response payload examples',
-        url: 'https://docs.zebedee.io/api/utils/btc-usd',
+        url: 'https://zbd.dev/api-reference/utils/btc-usd',
       },
     ],
+  },
+  {
+    name: 'convert_msats_to_sats',
+    entity: 'Utility',
+    description: 'Get the sats value from msats.',
+    params: [
+      {
+        name: 'amount_msats: String',
+        extra: 'required',
+        description: 'A String representing the sats amount being converted.',
+      },
+    ],
+    examples: [],
+  },
+  {
+    name: 'convert_sats_to_msats',
+    entity: 'Utility',
+    description: 'Get the msats value from sats.',
+    params: [
+      {
+        name: 'amount_sats: String',
+        extra: 'required',
+        description: 'A String representing the sats amount being converted.',
+      },
+    ],
+    examples: [],
   },
 ]
